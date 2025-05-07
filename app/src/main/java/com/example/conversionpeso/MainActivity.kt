@@ -1,32 +1,45 @@
-package com.tunombre.conversionpeso
+package com.example.conversionpeso
 
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import com.tunombre.conversionpeso.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
-    private val unidades = arrayOf("Kilogramos a Libras", "Kilogramos a Onzas", "Libras a Kilogramos", "Onzas a Kilogramos")
+    private lateinit var etPeso: EditText
+    private lateinit var spinnerUnidades: Spinner
+    private lateinit var btnConvertir: Button
+    private lateinit var tvResultado: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_main)
 
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, unidades)
-        binding.spinnerUnidades.adapter = adapter
+        etPeso = findViewById(R.id.etPeso)
+        spinnerUnidades = findViewById(R.id.spinnerUnidades)
+        btnConvertir = findViewById(R.id.btnConvertir)
+        tvResultado = findViewById(R.id.tvResultado)
 
-        binding.btnConvertir.setOnClickListener {
-            val valor = binding.etPeso.text.toString().toFloatOrNull()
+        val opciones = arrayOf(
+            "Kilogramos a Libras",
+            "Kilogramos a Onzas",
+            "Libras a Kilogramos",
+            "Onzas a Kilogramos"
+        )
+
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, opciones)
+        spinnerUnidades.adapter = adapter
+
+        btnConvertir.setOnClickListener {
+            val valorTexto = etPeso.text.toString()
+            val valor = valorTexto.toFloatOrNull()
 
             if (valor == null) {
                 Toast.makeText(this, "Ingrese un número válido", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            val resultado = when (binding.spinnerUnidades.selectedItem.toString()) {
+            val resultado = when (spinnerUnidades.selectedItem.toString()) {
                 "Kilogramos a Libras" -> valor * 2.20462
                 "Kilogramos a Onzas" -> valor * 35.274
                 "Libras a Kilogramos" -> valor / 2.20462
@@ -34,7 +47,7 @@ class MainActivity : AppCompatActivity() {
                 else -> 0.0
             }
 
-            val unidadDestino = when (binding.spinnerUnidades.selectedItem.toString()) {
+            val unidad = when (spinnerUnidades.selectedItem.toString()) {
                 "Kilogramos a Libras" -> "lb"
                 "Kilogramos a Onzas" -> "oz"
                 "Libras a Kilogramos" -> "kg"
@@ -42,7 +55,7 @@ class MainActivity : AppCompatActivity() {
                 else -> ""
             }
 
-            binding.tvResultado.text = "Resultado: %.2f $unidadDestino".format(resultado)
+            tvResultado.text = "Resultado: %.2f $unidad".format(resultado)
         }
     }
 }

@@ -1,72 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_gradient"
-    android:padding="24dp">
+    android:padding="24dp"
+    android:gravity="center_horizontal"
+    android:background="#ECEFF1">
 
     <TextView
         android:id="@+id/tvTitulo"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Conversor de Peso"
         android:textSize="26sp"
         android:textStyle="bold"
-        android:textColor="#FFFFFF"
-        android:gravity="center"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/etPeso"
+        android:textColor="#37474F"
         android:layout_marginBottom="32dp"/>
 
     <EditText
         android:id="@+id/etPeso"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Ingrese el peso"
         android:inputType="numberDecimal"
-        android:backgroundTint="#FFFFFF"
-        android:textColor="#FFFFFF"
-        android:textColorHint="#DDDDDD"
-        app:layout_constraintTop_toBottomOf="@id/tvTitulo"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginBottom="16dp"/>
 
     <Spinner
         android:id="@+id/spinnerUnidades"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="#FFFFFF"
-        app:layout_constraintTop_toBottomOf="@id/etPeso"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginBottom="16dp"/>
 
     <Button
         android:id="@+id/btnConvertir"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Convertir"
-        android:backgroundTint="#FFFFFF"
-        android:textColor="#000000"
-        app:layout_constraintTop_toBottomOf="@id/spinnerUnidades"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:text="Convertir"/>
 
     <TextView
         android:id="@+id/tvResultado"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Resultado: "
-        android:textColor="#FFFFFF"
         android:textSize="18sp"
-        app:layout_constraintTop_toBottomOf="@id/btnConvertir"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="#263238"
         android:layout_marginTop="32dp"/>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
