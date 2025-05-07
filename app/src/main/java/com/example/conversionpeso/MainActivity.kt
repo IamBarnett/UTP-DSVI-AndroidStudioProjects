@@ -1,59 +1,48 @@
-package com.example.conversionpeso
+package com.tunombre.conversionpeso
 
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import android.view.Menu
-import android.view.MenuItem
-import com.example.conversionpeso.databinding.ActivityMainBinding
+import com.tunombre.conversionpeso.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+    private val unidades = arrayOf("Kilogramos a Libras", "Kilogramos a Onzas", "Libras a Kilogramos", "Onzas a Kilogramos")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setSupportActionBar(binding.toolbar)
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, unidades)
+        binding.spinnerUnidades.adapter = adapter
 
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
-        appBarConfiguration = AppBarConfiguration(navController.graph)
-        setupActionBarWithNavController(navController, appBarConfiguration)
+        binding.btnConvertir.setOnClickListener {
+            val valor = binding.etPeso.text.toString().toFloatOrNull()
 
-        binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null)
-                .setAnchorView(R.id.fab).show()
+            if (valor == null) {
+                Toast.makeText(this, "Ingrese un número válido", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            val resultado = when (binding.spinnerUnidades.selectedItem.toString()) {
+                "Kilogramos a Libras" -> valor * 2.20462
+                "Kilogramos a Onzas" -> valor * 35.274
+                "Libras a Kilogramos" -> valor / 2.20462
+                "Onzas a Kilogramos" -> valor / 35.274
+                else -> 0.0
+            }
+
+            val unidadDestino = when (binding.spinnerUnidades.selectedItem.toString()) {
+                "Kilogramos a Libras" -> "lb"
+                "Kilogramos a Onzas" -> "oz"
+                "Libras a Kilogramos" -> "kg"
+                "Onzas a Kilogramos" -> "kg"
+                else -> ""
+            }
+
+            binding.tvResultado.text = "Resultado: %.2f $unidadDestino".format(resultado)
         }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
-        return navController.navigateUp(appBarConfiguration)
-                || super.onSupportNavigateUp()
     }
 }
