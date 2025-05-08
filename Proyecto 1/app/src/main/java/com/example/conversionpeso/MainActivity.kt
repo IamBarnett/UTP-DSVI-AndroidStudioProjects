@@ -31,19 +31,19 @@ class MainActivity : AppCompatActivity() {
         spinnerUnidades.adapter = adapter
 
         btnConvertir.setOnClickListener {
-            val valorTexto = etPeso.text.toString()
-            val valor = valorTexto.toFloatOrNull()
+            val pesoTexto = etPeso.text.toString()
+            val peso = pesoTexto.toFloatOrNull()
 
-            if (valor == null) {
+            if (peso == null) {
                 Toast.makeText(this, "Ingrese un número válido", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
             val resultado = when (spinnerUnidades.selectedItem.toString()) {
-                "Kilogramos a Libras" -> valor * 2.20462
-                "Kilogramos a Onzas" -> valor * 35.274
-                "Libras a Kilogramos" -> valor / 2.20462
-                "Onzas a Kilogramos" -> valor / 35.274
+                "Kilogramos a Libras" -> peso * 2.20462
+                "Kilogramos a Onzas" -> peso * 35.274
+                "Libras a Kilogramos" -> peso / 2.20462
+                "Onzas a Kilogramos" -> peso / 35.274
                 else -> 0.0
             }
 

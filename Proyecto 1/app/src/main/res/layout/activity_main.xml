@@ -1,49 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="24dp"
-    android:gravity="center_horizontal"
-    android:background="#ECEFF1">
+    android:background="#F0F0F0">
 
-    <TextView
-        android:id="@+id/tvTitulo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Conversor de Peso"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        android:textColor="#37474F"
-        android:layout_marginBottom="32dp"/>
-
-    <EditText
-        android:id="@+id/etPeso"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Ingrese el peso"
-        android:inputType="numberDecimal"
-        android:layout_marginBottom="16dp"/>
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:gravity="center_horizontal">
 
-    <Spinner
-        android:id="@+id/spinnerUnidades"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"/>
+        <!-- Título -->
+        <TextView
+            android:id="@+id/tvTitulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Conversor de Peso"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="#2C3E50"
+            android:layout_marginBottom="24dp" />
 
-    <Button
-        android:id="@+id/btnConvertir"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Convertir"/>
+        <!-- Campo de entrada -->
+        <EditText
+            android:id="@+id/etPeso"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Ingrese el valor en peso"
+            android:inputType="numberDecimal"
+            android:background="@android:drawable/edit_text"
+            android:padding="12dp"
+            android:layout_marginBottom="16dp" />
 
-    <TextView
-        android:id="@+id/tvResultado"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Resultado: "
-        android:textSize="18sp"
-        android:textColor="#263238"
-        android:layout_marginTop="32dp"/>
-</LinearLayout>
+        <!-- Selector de unidades -->
+        <Spinner
+            android:id="@+id/spinnerUnidades"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Botón de conversión -->
+        <Button
+            android:id="@+id/btnConvertir"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Convertir"
+            android:textAllCaps="false"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Resultado -->
+        <TextView
+            android:id="@+id/tvResultado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Resultado:"
+            android:textSize="18sp"
+            android:textColor="#37474F"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:padding="16dp"
+            android:background="#DDDDDD"
+            android:layout_marginTop="8dp" />
+    </LinearLayout>
+</ScrollView>
