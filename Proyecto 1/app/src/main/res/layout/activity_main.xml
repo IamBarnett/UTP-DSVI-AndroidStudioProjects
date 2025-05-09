@@ -30,11 +30,29 @@
             android:padding="12dp"
             android:layout_marginBottom="16dp" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Convertir De:"
+            android:textSize="16sp"
+            android:textColor="#555555"
+            android:layout_marginBottom="4dp"
+            android:gravity="center"/>
+
         <Spinner
             android:id="@+id/spinnerOrigen"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Convertir A:"
+            android:textSize="16sp"
+            android:textColor="#555555"
+            android:layout_marginBottom="4dp"
+            android:gravity="center"/>
 
         <Spinner
             android:id="@+id/spinnerDestino"

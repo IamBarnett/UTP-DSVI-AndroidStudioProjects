@@ -12,7 +12,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnConvertir: Button
     private lateinit var tvResultado: TextView
 
-    private val unidades = arrayOf("Kilogramos", "Libras", "Onzas", "Gramos")
+    private val unidades = arrayOf("Kilogramos (kg)", "Libras (lbs)", "Onzas (oz)", "Gramos (g)")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
