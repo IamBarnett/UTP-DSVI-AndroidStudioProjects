@@ -48,27 +48,27 @@ class MainActivity : AppCompatActivity() {
 
     private fun convertirPeso(valor: Double, origen: String, destino: String): Double {
         val enGramos = when (origen) {
-            "Kilogramos" -> valor * 1000.0
-            "Libras"     -> valor * 453.592
-            "Onzas"      -> valor * 28.3495
-            "Gramos"     -> valor
+            "Kilogramos (kg)" -> valor * 1000.0
+            "Libras (lbs)"     -> valor * 453.592
+            "Onzas (oz)"      -> valor * 28.3495
+            "Gramos (g)"     -> valor
             else         -> 0.0
         }
 
         return when (destino) {
-            "Kilogramos" -> enGramos / 1000.0
-            "Libras"     -> enGramos / 453.592
-            "Onzas"      -> enGramos / 28.3495
-            "Gramos"     -> enGramos
+            "Kilogramos (kg)" -> enGramos / 1000.0
+            "Libras (lbs)"     -> enGramos / 453.592
+            "Onzas (oz)"      -> enGramos / 28.3495
+            "Gramos (g)"     -> enGramos
             else         -> 0.0
         }
     }
 
     private fun formatearResultado(valor: Double, unidad: String): String {
         return when (unidad) {
-            "Kilogramos", "Libras" -> String.format("%.4f", valor)
-            "Onzas"                -> String.format("%.3f", valor)
-            "Gramos"               -> valor.toInt().toString()
+            "Kilogramos (kg)", "Libras (lbs)" -> String.format("%.4f", valor)
+            "Onzas (oz)"                -> String.format("%.3f", valor)
+            "Gramos (g)"               -> valor.toInt().toString()
             else                   -> valor.toString()
         }
     }
