@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5F5">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="📝 Nueva Actividad"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#2E7D32"
+            android:layout_marginBottom="24dp"
+            android:gravity="center"
+            android:layout_gravity="center" />
+
+        <!-- Título -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Título *"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#333333"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etTitulo"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="Ej: Reunión de trabajo"
+            android:background="@drawable/edittext_style"
+            android:padding="12dp"
+            android:layout_marginBottom="16dp"
+            android:inputType="text" />
+
+        <!-- Descripción -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Descripción"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#333333"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etDescripcion"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:hint="Describe tu actividad..."
+            android:background="@drawable/edittext_style"
+            android:padding="12dp"
+            android:layout_marginBottom="16dp"
+            android:inputType="textMultiLine"
+            android:gravity="top" />
+
+        <!-- Fecha -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fecha *"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#333333"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etFecha"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="DD/MM/AAAA (Ej: 15/06/2025)"
+            android:background="@drawable/edittext_style"
+            android:padding="12dp"
+            android:layout_marginBottom="16dp"
+            android:inputType="date" />
+
+        <!-- Hora -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hora *"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#333333"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etHora"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="HH:MM (Ej: 14:30)"
+            android:background="@drawable/edittext_style"
+            android:padding="12dp"
+            android:layout_marginBottom="16dp"
+            android:inputType="time" />
+
+        <!-- Ubicación -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ubicación"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#333333"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etUbicacion"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="Ej: Ciudad de Panamá, Panamá"
+            android:background="@drawable/edittext_style"
+            android:padding="12dp"
+            android:layout_marginBottom="16dp"
+            android:inputType="text" />
+
+        <!-- Notificación -->
+        <CheckBox
+            android:id="@+id/cbNotificacion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="¿Activar notificación?"
+            android:textSize="16sp"
+            android:textColor="#333333"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Botones -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp">
+
+            <Button
+                android:id="@+id/btnCancelar"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:text="❌ Cancelar"
+                android:textSize="16sp"
+                android:background="@drawable/button_cancel_style"
+                android:textColor="@android:color/white"
+                android:layout_marginEnd="8dp" />
+
+            <Button
+                android:id="@+id/btnGuardar"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:text="💾 Guardar"
+                android:textSize="16sp"
+                android:background="@drawable/button_style"
+                android:textColor="@android:color/white"
+                android:layout_marginStart="8dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Gestor de Actividades</string>
+    <string name="crear_actividad">Crear Nueva Actividad</string>
+    <string name="ver_actividades">Ver Actividades</string>
+    <string name="ver_calendario">Abrir Calendario</string>
+    <string name="titulo">Título</string>
+    <string name="descripcion">Descripción</string>
+    <string name="fecha">Fecha</string>
+    <string name="hora">Hora</string>
+    <string name="ubicacion">Ubicación</string>
+    <string name="notificacion">Notificación</string>
+    <string name="guardar">Guardar</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="volver">Volver</string>
+    <string name="compartir">Compartir</string>
+    <string name="abrir_maps">Abrir en Maps</string>
+    <string name="agregar_calendario">Agregar al Calendario</string>
+</resources>
