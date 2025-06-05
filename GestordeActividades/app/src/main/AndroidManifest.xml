@@ -2,10 +2,21 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Permisos para Intent implícitos -->
+    <!-- Permisos para Intent implícitos y calendario -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
     <uses-permission android:name="android.permission.READ_CALENDAR" />
+
+    <!-- Consultas para verificar apps instaladas -->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.INSERT" />
+            <data android:mimeType="vnd.android.cursor.item/event" />
+        </intent>
+        <package android:name="com.google.android.calendar" />
+        <package android:name="com.android.calendar" />
+        <package android:name="com.samsung.android.calendar" />
+    </queries>
 
     <application
         android:allowBackup="true"

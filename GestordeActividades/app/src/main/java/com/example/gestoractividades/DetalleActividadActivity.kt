@@ -63,29 +63,31 @@ class DetalleActividadActivity : AppCompatActivity() {
             }
         }
 
-        // Botón para agregar al calendario
+        // Botón para agregar al calendario - VERSIÓN SIMPLE QUE FUNCIONA
         btnCalendario.setOnClickListener {
-            val intent = Intent(Intent.ACTION_INSERT)
-            intent.data = CalendarContract.Events.CONTENT_URI
-            intent.putExtra(CalendarContract.Events.TITLE, actividad.titulo)
-            intent.putExtra(CalendarContract.Events.DESCRIPTION, actividad.descripcion)
-            intent.putExtra(CalendarContract.Events.EVENT_LOCATION, actividad.ubicacion)
-
             try {
-                // Intentar convertir fecha y hora a timestamp
-                val dateTimeString = "${actividad.fecha} ${actividad.hora}"
-                val formatter = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
-                val date = formatter.parse(dateTimeString)
-                if (date != null) {
-                    intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, date.time)
-                    intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, date.time + (60 * 60 * 1000)) // +1 hora
+                val intent = Intent(Intent.ACTION_INSERT)
+                intent.data = CalendarContract.Events.CONTENT_URI
+                intent.putExtra(CalendarContract.Events.TITLE, actividad.titulo)
+                intent.putExtra(CalendarContract.Events.DESCRIPTION, actividad.descripcion)
+                intent.putExtra(CalendarContract.Events.EVENT_LOCATION, actividad.ubicacion)
+
+                // SOLO arreglar la fecha/hora - VERSIÓN SIMPLE
+                try {
+                    val fechaHoraString = "${actividad.fecha} ${actividad.hora}"
+                    val formatter = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
+                    val date = formatter.parse(fechaHoraString)
+
+                    if (date != null) {
+                        intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, date.time)
+                        intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, date.time + (60 * 60 * 1000)) // +1 hora
+                    }
+                } catch (e: Exception) {
+                    // Si hay error con fecha, continuar sin timestamp (como antes)
                 }
-            } catch (e: Exception) {
-                // Si hay error con la fecha, continuar sin timestamp
-            }
 
-            try {
                 startActivity(intent)
+
             } catch (e: Exception) {
                 Toast.makeText(this, "No se pudo abrir el calendario", Toast.LENGTH_SHORT).show()
             }

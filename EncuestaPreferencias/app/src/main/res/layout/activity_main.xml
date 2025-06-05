@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/app_title"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Nombre completo -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/nombre_completo"
+            android:layout_marginTop="8dp" />
+
+        <EditText
+            android:id="@+id/editTextNombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:hint="@string/ingrese_su_nombre"
+            android:inputType="textPersonName"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Comida favorita -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/seleccione_comida" />
+
+        <RadioGroup
+            android:id="@+id/radioGroupComida"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp">
+
+            <RadioButton
+                android:id="@+id/radioItaliana"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:text="@string/italiana" />
+
+            <RadioButton
+                android:id="@+id/radioChina"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:text="@string/china" />
+
+            <RadioButton
+                android:id="@+id/radioPanamena"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:text="@string/panamena" />
+        </RadioGroup>
+
+        <!-- Pasatiempo favorito -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/seleccione_pasatiempo" />
+
+        <Spinner
+            android:id="@+id/spinnerPasatiempo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Práctica deporte -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/practica_deporte" />
+
+        <Switch
+            android:id="@+id/switchDeporte"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:text="@string/si_no"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Fecha de nacimiento -->
+        <Button
+            android:id="@+id/btnFechaNacimiento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/seleccionar_fecha"
+            android:minHeight="48dp" />
+
+        <TextView
+            android:id="@+id/textViewFecha"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Imagen según comida -->
+        <ImageView
+            android:id="@+id/imageViewComida"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
+            android:contentDescription="@string/imagen_comida"
+            android:scaleType="fitCenter" />
+
+        <!-- Botones de acción -->
+        <Button
+            android:id="@+id/btnMensajeDivertido"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/mostrar_mensaje_divertido"
+            android:minHeight="48dp"
+            android:layout_marginBottom="8dp" />
+
+        <Button
+            android:id="@+id/btnMostrarResultados"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/mostrar_resultados"
+            android:onClick="mostrarResultados"
+            android:minHeight="48dp"
+            android:layout_marginBottom="16dp" />
+
+    </LinearLayout>
+</ScrollView>
