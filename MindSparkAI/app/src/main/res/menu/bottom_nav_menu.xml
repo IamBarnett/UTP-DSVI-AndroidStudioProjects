@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/dashboardFragment"
+        android:icon="@drawable/ic_home"
+        android:title="@string/nav_home" />
+
+    <item
+        android:id="@+id/summaryFragment"
+        android:icon="@drawable/ic_document"
+        android:title="@string/nav_summary" />
+
+    <item
+        android:id="@+id/quizFragment"
+        android:icon="@drawable/ic_target"
+        android:title="Quiz" />
+
+    <item
+        android:id="@+id/studyPlanFragment"
+        android:icon="@drawable/ic_calendar"
+        android:title="@string/nav_plan" />
+
+    <item
+        android:id="@+id/profileFragment"
+        android:icon="@drawable/ic_profile"
+        android:title="@string/nav_profile" />
+</menu>
