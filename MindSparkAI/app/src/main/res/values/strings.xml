@@ -608,7 +608,7 @@
     <string name="whats_new">Novedades</string>
 
     <!-- Default web client ID for Google Sign In -->
-    <string name="default_web_client_id" translatable="false">your_web_client_id_here</string>
+    <string name="default_web_client_id" translatable="false">744063847491-cffff27bf3nut5ufoiighmchuusgt228.apps.googleusercontent.com</string>
 
     <!-- Server Configuration (no traducir) -->
     <string name="server_url_production" translatable="false">https://api.mindsparkai.com</string>
