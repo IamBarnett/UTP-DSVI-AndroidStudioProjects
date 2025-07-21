@@ -73,7 +73,6 @@ android {
     kapt {
         correctErrorTypes = true
         useBuildCache = false
-        generateStubs = true
     }
 
     packaging {

@@ -25,6 +25,9 @@
             app:destination="@id/dashboardFragment"
             app:popUpTo="@id/welcomeFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_login_to_register"
+            app:destination="@id/registerFragment" />
     </fragment>
 
     <fragment
@@ -36,6 +39,9 @@
             app:destination="@id/dashboardFragment"
             app:popUpTo="@id/welcomeFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_register_to_login"
+            app:destination="@id/loginFragment" />
     </fragment>
 
     <fragment

@@ -301,7 +301,6 @@
     <string name="timeout_error">Tiempo de espera agotado</string>
     <string name="reconnecting">Reconectando…</string>
     <string name="connection_restored">Conexión restaurada</string>
-    <string name="offline_mode">Modo sin conexión</string>
     <string name="sync_pending">Sincronización pendiente</string>
 
     <!-- Statistics -->

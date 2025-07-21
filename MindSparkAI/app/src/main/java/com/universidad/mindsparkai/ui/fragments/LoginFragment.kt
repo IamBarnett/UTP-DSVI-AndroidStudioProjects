@@ -71,12 +71,17 @@ class LoginFragment : Fragment() {
             signInWithGoogle()
         }
 
-        binding.tvForgotPassword?.setOnClickListener {
+        binding.tvForgotPassword.setOnClickListener {
             showForgotPasswordDialog()
         }
 
-        binding.tvRegisterLink?.setOnClickListener {
-            findNavController().navigate(R.id.action_login_to_register)
+        binding.tvRegisterLink.setOnClickListener {
+            try {
+                findNavController().navigate(R.id.action_login_to_register)
+            } catch (e: Exception) {
+                // Fallback navigation if action doesn't exist
+                findNavController().navigate(R.id.registerFragment)
+            }
         }
     }
 
@@ -95,18 +100,18 @@ class LoginFragment : Fragment() {
             when (state) {
                 is AuthViewModel.AuthState.Authenticated -> {
                     if (state.isNewUser) {
-                        // Navegar a configuración inicial
-                        findNavController().navigate(R.id.action_login_to_setup)
+                        // Navigate to dashboard for new users
+                        findNavController().navigate(R.id.action_login_to_dashboard)
                     } else {
-                        // Navegar al dashboard
+                        // Navigate to dashboard for existing users
                         findNavController().navigate(R.id.action_login_to_dashboard)
                     }
                 }
                 is AuthViewModel.AuthState.Unauthenticated -> {
-                    // Mantener en login
+                    // Stay in login
                 }
                 is AuthViewModel.AuthState.Loading -> {
-                    // Mostrar loading
+                    // Show loading state
                 }
             }
         }
@@ -137,26 +142,26 @@ class LoginFragment : Fragment() {
 
         if (isLoading) {
             binding.btnLogin.text = "Iniciando sesión..."
-            binding.progressBar?.visibility = View.VISIBLE
+            binding.progressBar.visibility = View.VISIBLE
         } else {
             binding.btnLogin.text = getString(R.string.btn_login)
-            binding.progressBar?.visibility = View.GONE
+            binding.progressBar.visibility = View.GONE
         }
     }
 
     private fun updateEmailValidation(validation: AuthViewModel.ValidationState) {
         if (!validation.isValid && validation.message != null) {
-            binding.tilEmail?.error = validation.message
+            binding.tilEmail.error = validation.message
         } else {
-            binding.tilEmail?.error = null
+            binding.tilEmail.error = null
         }
     }
 
     private fun updatePasswordValidation(validation: AuthViewModel.ValidationState) {
         if (!validation.isValid && validation.message != null) {
-            binding.tilPassword?.error = validation.message
+            binding.tilPassword.error = validation.message
         } else {
-            binding.tilPassword?.error = null
+            binding.tilPassword.error = null
         }
     }
 
@@ -165,12 +170,12 @@ class LoginFragment : Fragment() {
         val password = binding.etPassword.text.toString()
 
         if (email.isEmpty()) {
-            binding.tilEmail?.error = "Email requerido"
+            binding.tilEmail.error = "Email requerido"
             return
         }
 
         if (password.isEmpty()) {
-            binding.tilPassword?.error = "Contraseña requerida"
+            binding.tilPassword.error = "Contraseña requerida"
             return
         }
 
@@ -182,6 +187,7 @@ class LoginFragment : Fragment() {
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -200,6 +206,8 @@ class LoginFragment : Fragment() {
         val emailInput = android.widget.EditText(requireContext()).apply {
             hint = "Ingresa tu email"
             setText(binding.etEmail.text.toString())
+            setPadding(64, 32, 64, 32)
+            textSize = 16f
         }
 
         androidx.appcompat.app.AlertDialog.Builder(requireContext())
@@ -210,6 +218,9 @@ class LoginFragment : Fragment() {
                 val email = emailInput.text.toString().trim()
                 if (email.isNotEmpty()) {
                     viewModel.sendPasswordReset(email)
+                    showSuccess("Se ha enviado un email de recuperación")
+                } else {
+                    showError("Por favor ingresa un email válido")
                 }
             }
             .setNegativeButton("Cancelar", null)
@@ -217,6 +228,10 @@ class LoginFragment : Fragment() {
     }
 
     private fun showError(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
+    }
+
+    private fun showSuccess(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
     }
 
