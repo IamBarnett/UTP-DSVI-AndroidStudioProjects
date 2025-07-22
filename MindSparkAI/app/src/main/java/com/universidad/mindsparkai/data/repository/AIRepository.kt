@@ -11,6 +11,28 @@ class AIRepository @Inject constructor(
     private val aiService: AIService
 ) {
 
+    // API Keys - Usando BuildConfig con fallback
+    private val openAIKey: String get() = try {
+        BuildConfig.OPENAI_API_KEY.takeIf { it.isNotEmpty() }
+            ?: "demo-key"
+    } catch (e: Exception) {
+        "demo-key"
+    }
+
+    private val claudeKey: String get() = try {
+        BuildConfig.CLAUDE_API_KEY.takeIf { it.isNotEmpty() }
+            ?: "demo-key"
+    } catch (e: Exception) {
+        "demo-key"
+    }
+
+    private val geminiKey: String get() = try {
+        BuildConfig.GEMINI_API_KEY.takeIf { it.isNotEmpty() }
+            ?: "demo-key"
+    } catch (e: Exception) {
+        "demo-key"
+    }
+
     enum class AIModel(val displayName: String, val provider: String) {
         GPT_4("GPT-4", "openai"),
         GPT_3_5("GPT-3.5 Turbo", "openai"),
@@ -25,247 +47,246 @@ class AIRepository @Inject constructor(
         model: AIModel = AIModel.GPT_4,
         context: List<String> = emptyList()
     ): Result<String> {
-        return Result.success(generateRealisticResponse(message, model))
+        return try {
+            when (model.provider) {
+                "openai" -> sendOpenAIMessage(message, model, context)
+                "anthropic" -> sendClaudeMessage(message, model, context)
+                "google" -> sendGeminiMessage(message, model, context)
+                else -> Result.failure(Exception("Modelo no soportado"))
+            }
+        } catch (e: Exception) {
+            // En caso de error, devolver respuesta demo
+            Result.success(generateDemoResponse(message, model))
+        }
     }
 
-    private fun generateRealisticResponse(message: String, model: AIModel): String {
-        val messageKey = message.lowercase()
+    private fun generateDemoResponse(message: String, model: AIModel): String {
+        val responses = listOf(
+            "Esta es una respuesta de demostración del modelo ${model.displayName}. Tu pregunta sobre '$message' sería procesada por la IA real cuando configures las API keys.",
+            "Excelente pregunta. El modelo ${model.displayName} te ayudaría a resolver: '$message'. Para obtener respuestas reales, configura las API keys en local.properties.",
+            "🤖 Respuesta simulada de ${model.displayName}: He analizado tu consulta '$message'. Esta funcionalidad estará disponible cuando configures las claves de API reales.",
+            "Basándome en tu pregunta sobre '$message', ${model.displayName} proporcionaría una respuesta detallada. Actualmente ejecutándose en modo demostración."
+        )
+        return responses.random()
+    }
 
-        return when {
-            messageKey.contains("hola") || messageKey.contains("hello") -> {
-                "¡Hola! 👋 Soy tu asistente de estudio inteligente ${model.displayName}. Estoy aquí para ayudarte con cualquier pregunta académica. ¿En qué puedo asistirte hoy?"
+    private suspend fun sendOpenAIMessage(
+        message: String,
+        model: AIModel,
+        context: List<String>
+    ): Result<String> {
+        return try {
+            // Verificar API key
+            if (openAIKey == "demo-key" || openAIKey.length < 20) {
+                return Result.success(generateDemoResponse(message, model))
             }
 
-            messageKey.contains("fotosíntesis") || messageKey.contains("fotosintesis") -> {
-                """La fotosíntesis es el proceso mediante el cual las plantas convierten la luz solar en energía química. 
+            val messages = mutableListOf<OpenAIMessage>()
 
-**Ecuación básica:**
-6CO₂ + 6H₂O + luz solar → C₆H₁₂O₆ + 6O₂
-
-**Fases principales:**
-1. **Fase luminosa**: Captura de luz en los cloroplastos
-2. **Fase oscura**: Fijación del CO₂ en el ciclo de Calvin
-
-Este proceso es fundamental para la vida en la Tierra ya que produce el oxígeno que respiramos y convierte el CO₂ atmosférico en glucosa."""
+            // Agregar contexto de conversación
+            context.chunked(2) { pair ->
+                if (pair.size == 2) {
+                    messages.add(OpenAIMessage("user", pair[0]))
+                    messages.add(OpenAIMessage("assistant", pair[1]))
+                }
             }
 
-            messageKey.contains("matemática") || messageKey.contains("cálculo") -> {
-                """En matemáticas, puedo ayudarte con:
+            // Agregar mensaje actual
+            messages.add(OpenAIMessage("user", message))
 
-📐 **Álgebra**: Ecuaciones, sistemas, polinomios
-📊 **Cálculo**: Derivadas, integrales, límites  
-📈 **Estadística**: Probabilidad, distribuciones
-🔢 **Aritmética**: Operaciones básicas y avanzadas
-
-¿Qué tema específico te gustaría que explique?"""
+            val modelName = when (model) {
+                AIModel.GPT_4 -> "gpt-3.5-turbo" // Usar 3.5 si no tienes créditos para GPT-4
+                AIModel.GPT_3_5 -> "gpt-3.5-turbo"
+                else -> "gpt-3.5-turbo"
             }
 
-            messageKey.contains("química") -> {
-                """La química estudia la materia y sus transformaciones.
+            val request = OpenAIRequest(
+                model = modelName,
+                messages = messages,
+                max_tokens = 500, // Reducir tokens para evitar rate limits
+                temperature = 0.7
+            )
 
-⚛️ **Conceptos fundamentales:**
-- Átomos y elementos
-- Enlaces químicos  
-- Reacciones químicas
-- Tabla periódica
+            val response = aiService.getOpenAICompletion(
+                authorization = "Bearer $openAIKey",
+                request = request
+            )
 
-🧪 **Ramas principales:**
-- Química orgánica
-- Química inorgánica  
-- Fisicoquímica
-- Bioquímica
+            if (response.isSuccessful) {
+                val content = response.body()?.choices?.firstOrNull()?.message?.content
+                if (content != null) {
+                    Result.success(content)
+                } else {
+                    Result.success(generateDemoResponse(message, model))
+                }
+            } else {
+                val errorCode = response.code()
+                when (errorCode) {
+                    404 -> Result.success("Error 404: Endpoint no encontrado. Usando respuesta demo: ${generateDemoResponse(message, model)}")
+                    429 -> Result.success("Rate limit excedido. Usando respuesta demo: ${generateDemoResponse(message, model)}")
+                    else -> Result.success(generateDemoResponse(message, model))
+                }
+            }
+        } catch (e: Exception) {
+            Result.success("Error de conexión: ${e.message}. Respuesta demo: ${generateDemoResponse(message, model)}")
+        }
+    }
 
-¿Hay algún tema específico de química que te interese?"""
+    private suspend fun sendClaudeMessage(
+        message: String,
+        model: AIModel,
+        context: List<String>
+    ): Result<String> {
+        // Claude siempre en modo demo por ahora
+        return Result.success(generateDemoResponse(message, model))
+    }
+
+    private suspend fun sendGeminiMessage(
+        message: String,
+        model: AIModel,
+        context: List<String>
+    ): Result<String> {
+        return try {
+            // Verificar API key
+            if (geminiKey == "demo-key" || geminiKey.length < 20) {
+                return Result.success(generateDemoResponse(message, model))
             }
 
-            messageKey.contains("física") -> {
-                """La física explica cómo funciona el universo.
+            val contents = mutableListOf<GeminiContent>()
 
-🌍 **Ramas principales:**
-- **Mecánica**: Movimiento y fuerzas
-- **Termodinámica**: Calor y energía
-- **Electromagnetismo**: Electricidad y magnetismo
-- **Óptica**: Luz y ondas
-- **Física moderna**: Relatividad y cuántica
+            // Agregar mensaje actual
+            contents.add(GeminiContent(
+                parts = listOf(GeminiPart(message)),
+                role = "user"
+            ))
 
-🔬 **Aplicaciones**: Desde tecnología hasta medicina.
+            val request = GeminiRequest(contents = contents)
 
-¿Qué área de la física te gustaría explorar?"""
+            val response = aiService.getGeminiCompletion(
+                model = "gemini-pro",
+                apiKey = geminiKey,
+                request = request
+            )
+
+            if (response.isSuccessful) {
+                val content = response.body()?.candidates?.firstOrNull()?.content?.parts?.firstOrNull()?.text
+                if (content != null) {
+                    Result.success(content)
+                } else {
+                    Result.success(generateDemoResponse(message, model))
+                }
+            } else {
+                Result.success(generateDemoResponse(message, model))
             }
-
-            messageKey.contains("historia") -> {
-                """La historia nos ayuda a entender el presente estudiando el pasado.
-
-📚 **Períodos importantes:**
-- Prehistoria y civilizaciones antiguas
-- Edad Media y Renacimiento  
-- Revolución Industrial
-- Siglos XX y XXI
-
-🌍 **Enfoques de estudio:**
-- Historia política y social
-- Historia económica
-- Historia cultural
-- Historia regional
-
-¿Qué período histórico te interesa más?"""
-            }
-
-            messageKey.contains("ayuda") || messageKey.contains("help") -> {
-                """¡Por supuesto que puedo ayudarte! 🤝
-
-Como tu asistente de estudio con IA ${model.displayName}, puedo:
-
-📖 **Explicar conceptos** de cualquier materia
-🧠 **Resolver problemas** paso a paso  
-📝 **Crear resúmenes** de textos largos
-❓ **Generar preguntas** de práctica
-📅 **Planificar** horarios de estudio
-💡 **Dar consejos** de estudio efectivo
-
-Solo pregúntame lo que necesites. ¿En qué materia te gustaría que te ayude?"""
-            }
-
-            messageKey.contains("gracias") || messageKey.contains("thanks") -> {
-                "¡De nada! 😊 Estoy aquí para ayudarte con tus estudios. Si tienes más preguntas sobre cualquier materia, no dudes en preguntar. ¡Que tengas un excelente día de aprendizaje!"
-            }
-
-            else -> {
-                """Excelente pregunta sobre "$message". 
-
-Como asistente de estudio ${model.displayName}, puedo ayudarte a profundizar en este tema. Para darte la mejor respuesta, necesitaría que me proporciones un poco más de contexto:
-
-🔍 **¿Podrías especificar:**
-- ¿De qué materia es esta pregunta?
-- ¿Qué nivel académico necesitas?
-- ¿Hay algún aspecto particular que te interese?
-
-💡 **También puedo ayudarte con:**
-- Explicaciones paso a paso
-- Ejemplos prácticos  
-- Ejercicios de práctica
-- Consejos de estudio
-
-¡Pregúntame lo que necesites!"""
-            }
+        } catch (e: Exception) {
+            Result.success(generateDemoResponse(message, model))
         }
     }
 
     suspend fun generateSummary(
         text: String,
-        model: AIModel = AIModel.CLAUDE_3_SONNET
+        model: AIModel = AIModel.GPT_3_5 // Usar GPT-3.5 por defecto
     ): Result<String> {
-        val wordCount = text.split("\\s+".toRegex()).size
-        val summary = """
-## 📄 Resumen Generado por ${model.displayName}
-
-**Texto original:** $wordCount palabras
-
-### Puntos Principales:
-• El texto aborda conceptos fundamentales del tema presentado
-• Se identifican ideas clave que requieren atención especial  
-• Los conceptos están interrelacionados de manera lógica
-• La información es relevante para el estudio académico
-
-### Conclusión:
-Este contenido proporciona una base sólida para comprender el tema tratado y puede servir como referencia para estudios posteriores.
-
-*✨ Resumen procesado con IA - Ideal para revisión rápida*
+        val prompt = """
+            Resume el siguiente texto de manera clara y concisa, extrayendo los puntos más importantes:
+            
+            TEXTO:
+            $text
+            
+            INSTRUCCIONES:
+            - Extrae los puntos principales
+            - Mantén la información más relevante
+            - Usa bullet points si es apropiado
+            - Sé conciso pero completo
         """.trimIndent()
 
-        return Result.success(summary)
+        return sendChatMessage(prompt, model)
     }
 
     suspend fun generateQuizQuestions(
         subject: String,
         difficulty: String,
         count: Int = 5,
-        model: AIModel = AIModel.GPT_4
+        model: AIModel = AIModel.GPT_3_5
     ): Result<String> {
-        val quiz = """
-{
-  "questions": [
-    {
-      "question": "¿Cuál es el concepto fundamental en $subject?",
-      "options": ["A) Opción básica", "B) Concepto principal", "C) Elemento secundario", "D) Factor complementario"],
-      "correctAnswer": 1,
-      "explanation": "El concepto principal es la base fundamental para entender $subject en nivel $difficulty."
-    },
-    {
-      "question": "En $subject, ¿qué elemento es más importante?",
-      "options": ["A) Teoría", "B) Práctica", "C) Comprensión integral", "D) Memorización"],
-      "correctAnswer": 2,
-      "explanation": "La comprensión integral combina teoría y práctica para un aprendizaje efectivo en $subject."
-    },
-    {
-      "question": "¿Cuál es la mejor estrategia para estudiar $subject?",
-      "options": ["A) Solo leer", "B) Solo practicar", "C) Combinar lectura y práctica", "D) Memorizar todo"],
-      "correctAnswer": 2,
-      "explanation": "Combinar lectura y práctica permite una comprensión más profunda y duradera de $subject."
-    }
-  ]
-}
+        val prompt = """
+            Genera $count preguntas de opción múltiple sobre $subject con dificultad $difficulty.
+            
+            FORMATO REQUERIDO (JSON):
+            {
+              "questions": [
+                {
+                  "question": "Pregunta aquí",
+                  "options": ["A) Opción 1", "B) Opción 2", "C) Opción 3", "D) Opción 4"],
+                  "correctAnswer": 1,
+                  "explanation": "Explicación de por qué es correcta"
+                }
+              ]
+            }
+            
+            REQUISITOS:
+            - 4 opciones por pregunta
+            - Una sola respuesta correcta
+            - Explicación clara
+            - Nivel de dificultad: $difficulty
+            - Tema: $subject
         """.trimIndent()
 
-        return Result.success(quiz)
+        return sendChatMessage(prompt, model)
     }
 
     suspend fun generateStudyPlan(
         subjects: List<String>,
         hoursPerDay: Int,
         goals: String,
-        model: AIModel = AIModel.GPT_4
+        model: AIModel = AIModel.GPT_3_5
     ): Result<String> {
-        val plan = """
-{
-  "weeklyPlan": {
-    "totalHours": ${hoursPerDay * 7},
-    "days": [
-      {
-        "day": "Lunes",
-        "sessions": [
-          {
-            "subject": "${subjects.firstOrNull() ?: "Matemáticas"}",
-            "topic": "Conceptos fundamentales",
-            "duration": ${hoursPerDay * 30},
-            "type": "study",
-            "timeSlot": "9:00-${9 + hoursPerDay}:00"
-          }
-        ]
-      },
-      {
-        "day": "Martes", 
-        "sessions": [
-          {
-            "subject": "${subjects.getOrNull(1) ?: "Química"}",
-            "topic": "Práctica y ejercicios",
-            "duration": ${hoursPerDay * 30},
-            "type": "practice",
-            "timeSlot": "9:00-${9 + hoursPerDay}:00"
-          }
-        ]
-      }
-    ]
-  },
-  "recommendations": [
-    "📚 Dedica ${hoursPerDay}h diarias a ${subjects.joinToString(", ")}",
-    "⏰ Estudia en bloques de 45min con descansos de 15min",
-    "🎯 Enfócate en: $goals",
-    "💡 Alterna entre teoría y práctica para mejor retención",
-    "📝 Toma notas y haz resúmenes al final de cada sesión"
-  ]
-}
+        val prompt = """
+            Crea un plan de estudio semanal detallado con las siguientes especificaciones:
+            
+            MATERIAS: ${subjects.joinToString(", ")}
+            HORAS DISPONIBLES: $hoursPerDay horas diarias
+            OBJETIVOS: $goals
+            
+            FORMATO REQUERIDO (JSON):
+            {
+              "weeklyPlan": {
+                "totalHours": 28,
+                "days": [
+                  {
+                    "day": "Lunes",
+                    "sessions": [
+                      {
+                        "subject": "Matemáticas",
+                        "topic": "Cálculo diferencial",
+                        "duration": 120,
+                        "type": "study",
+                        "timeSlot": "9:00-11:00"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "recommendations": [
+                "Recomendación 1",
+                "Recomendación 2"
+              ]
+            }
+            
+            TIPOS DE SESIÓN: study, review, practice, exam_prep
+            DURACIÓN: en minutos
         """.trimIndent()
 
-        return Result.success(plan)
+        return sendChatMessage(prompt, model)
     }
 
+    // Función para verificar estado de APIs
     fun getApiStatus(): Map<String, String> {
         return mapOf(
-            "openai" to "Demo",
+            "openai" to if (openAIKey.length > 20) "Configurada" else "Demo",
             "claude" to "Demo",
-            "gemini" to "Demo",
-            "mode" to "Full Demo Mode"
+            "gemini" to if (geminiKey.length > 20) "Configurada" else "Demo",
+            "mode" to "Hybrid"
         )
     }
 }
