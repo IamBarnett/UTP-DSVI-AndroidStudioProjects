@@ -56,6 +56,7 @@
 
     <!-- Content -->
     <ScrollView
+        android:id="@+id/content_scroll"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@+id/header"
@@ -89,7 +90,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:text="M"
+                        android:text="U"
                         android:textColor="@color/white"
                         android:textSize="32sp"
                         android:fontFamily="sans-serif-bold" />
@@ -101,7 +102,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
-                    android:text="María González"
+                    android:text="Usuario"
                     android:textColor="@color/text_primary"
                     android:textSize="24sp"
                     android:fontFamily="sans-serif-medium" />
@@ -110,7 +111,7 @@
                     android:id="@+id/tv_user_career"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Ingeniería de Sistemas • Universidad Nacional"
+                    android:text="Bienvenido a MindSpark AI"
                     android:textColor="@color/text_secondary"
                     android:textSize="14sp"
                     android:textAlignment="center" />
@@ -145,7 +146,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="4dp"
-                            android:text="247h"
+                            android:text="0h"
                             android:textColor="@color/primary_blue"
                             android:textSize="18sp"
                             android:fontFamily="sans-serif-bold" />
@@ -183,7 +184,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="4dp"
-                            android:text="156"
+                            android:text="0"
                             android:textColor="@color/primary_blue"
                             android:textSize="18sp"
                             android:fontFamily="sans-serif-bold" />
@@ -220,7 +221,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="4dp"
-                            android:text="89%"
+                            android:text="0%"
                             android:textColor="@color/primary_blue"
                             android:textSize="18sp"
                             android:fontFamily="sans-serif-bold" />
@@ -238,17 +239,7 @@
 
             </LinearLayout>
 
-            <!-- AI Models Usage -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginBottom="12dp"
-                android:text="Modelos IA utilizados"
-                android:textColor="@color/text_primary"
-                android:textSize="16sp"
-                android:fontFamily="sans-serif-medium" />
-
+            <!-- Settings Options -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -264,121 +255,190 @@
                     android:orientation="vertical"
                     android:padding="20dp">
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:text="Configuración"
+                        android:textColor="@color/text_primary"
+                        android:textSize="16sp"
+                        android:fontFamily="sans-serif-medium" />
+
+                    <!-- Edit Profile Option -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="12dp"
-                        android:orientation="horizontal">
+                        android:layout_marginBottom="16dp"
+                        android:orientation="horizontal"
+                        android:padding="12dp"
+                        android:background="?attr/selectableItemBackground"
+                        android:gravity="center_vertical">
 
-                        <LinearLayout
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_marginEnd="16dp"
+                            android:src="@drawable/ic_profile"
+                            android:tint="@color/text_secondary" />
+
+                        <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:orientation="vertical">
+                            android:text="Editar perfil"
+                            android:textColor="@color/text_primary"
+                            android:textSize="16sp" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="GPT-4"
-                                android:textColor="@color/text_primary"
-                                android:textSize="16sp"
-                                android:fontFamily="sans-serif-medium" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Más usado para explicaciones"
-                                android:textColor="@color/text_secondary"
-                                android:textSize="14sp" />
-
-                        </LinearLayout>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="67%"
-                            android:textColor="@color/primary_blue"
-                            android:textSize="16sp"
-                            android:fontFamily="sans-serif-medium" />
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:src="@drawable/ic_arrow_back"
+                            android:rotation="180"
+                            android:tint="@color/text_hint" />
 
                     </LinearLayout>
 
+                    <!-- Notifications Option -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="12dp"
-                        android:orientation="horizontal">
+                        android:layout_marginBottom="16dp"
+                        android:orientation="horizontal"
+                        android:padding="12dp"
+                        android:background="?attr/selectableItemBackground"
+                        android:gravity="center_vertical">
 
-                        <LinearLayout
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_marginEnd="16dp"
+                            android:src="@drawable/ic_settings"
+                            android:tint="@color/text_secondary" />
+
+                        <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:orientation="vertical">
+                            android:text="Notificaciones"
+                            android:textColor="@color/text_primary"
+                            android:textSize="16sp" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Claude-3"
-                                android:textColor="@color/text_primary"
-                                android:textSize="16sp"
-                                android:fontFamily="sans-serif-medium" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Preferido para resúmenes"
-                                android:textColor="@color/text_secondary"
-                                android:textSize="14sp" />
-
-                        </LinearLayout>
-
-                        <TextView
+                        <Switch
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="23%"
-                            android:textColor="@color/primary_blue"
-                            android:textSize="16sp"
-                            android:fontFamily="sans-serif-medium" />
+                            android:checked="true" />
 
                     </LinearLayout>
 
+                    <!-- Dark Mode Option -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:padding="12dp"
+                        android:background="?attr/selectableItemBackground"
+                        android:gravity="center_vertical">
 
-                        <LinearLayout
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_marginEnd="16dp"
+                            android:src="@drawable/ic_settings"
+                            android:tint="@color/text_secondary" />
+
+                        <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:orientation="vertical">
+                            android:text="Modo oscuro"
+                            android:textColor="@color/text_primary"
+                            android:textSize="16sp" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Gemini Pro"
-                                android:textColor="@color/text_primary"
-                                android:textSize="16sp"
-                                android:fontFamily="sans-serif-medium" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Usado para matemáticas"
-                                android:textColor="@color/text_secondary"
-                                android:textSize="14sp" />
-
-                        </LinearLayout>
-
-                        <TextView
+                        <Switch
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="10%"
-                            android:textColor="@color/primary_blue"
-                            android:textSize="16sp"
-                            android:fontFamily="sans-serif-medium" />
+                            android:checked="false" />
 
                     </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- Account Actions -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginBottom="32dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                app:cardBackgroundColor="@color/surface_white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:text="Cuenta"
+                        android:textColor="@color/text_primary"
+                        android:textSize="16sp"
+                        android:fontFamily="sans-serif-medium" />
+
+                    <!-- Export Data Option -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:orientation="horizontal"
+                        android:padding="12dp"
+                        android:background="?attr/selectableItemBackground"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_marginEnd="16dp"
+                            android:src="@drawable/ic_document"
+                            android:tint="@color/text_secondary" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Exportar datos"
+                            android:textColor="@color/text_primary"
+                            android:textSize="16sp" />
+
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:src="@drawable/ic_arrow_back"
+                            android:rotation="180"
+                            android:tint="@color/text_hint" />
+
+                    </LinearLayout>
+
+                    <!-- Logout Button -->
+                    <Button
+                        android:id="@+id/btn_logout"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@color/accent_red"
+                        android:text="Cerrar Sesión"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:fontFamily="sans-serif-medium"
+                        android:drawableStart="@drawable/ic_arrow_back"
+                        android:drawablePadding="8dp"
+                        android:drawableTint="@color/white"
+                        android:gravity="center" />
 
                 </LinearLayout>
 

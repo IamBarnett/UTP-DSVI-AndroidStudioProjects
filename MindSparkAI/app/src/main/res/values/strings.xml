@@ -261,208 +261,6 @@
     <string name="success_profile_updated">Perfil actualizado</string>
     <string name="success_file_uploaded">Archivo subido correctamente</string>
 
-    <!-- Notifications -->
-    <string name="notification_study_reminder">Es hora de estudiar</string>
-    <string name="notification_quiz_ready">Nuevo quiz disponible</string>
-    <string name="notification_plan_update">Tu plan de estudio ha sido actualizado</string>
-    <string name="notification_study_streak">¡Mantienes tu racha de estudio!</string>
-    <string name="notification_goal_achieved">¡Meta de estudio alcanzada!</string>
-    <string name="notification_new_feature">Nueva función disponible</string>
-    <string name="notification_weekly_summary">Resumen semanal listo</string>
-
-    <!-- Time -->
-    <string name="time_now">Ahora</string>
-    <string name="time_minute_ago">Hace 1 minuto</string>
-    <string name="time_minutes_ago">Hace %d minutos</string>
-    <string name="time_hour_ago">Hace 1 hora</string>
-    <string name="time_hours_ago">Hace %d horas</string>
-    <string name="time_day_ago">Ayer</string>
-    <string name="time_days_ago">Hace %d días</string>
-    <string name="time_week_ago">Hace 1 semana</string>
-    <string name="time_weeks_ago">Hace %d semanas</string>
-    <string name="time_month_ago">Hace 1 mes</string>
-    <string name="time_months_ago">Hace %d meses</string>
-
-    <!-- File Upload -->
-    <string name="file_select">Seleccionar archivo</string>
-    <string name="file_upload_success">Archivo subido exitosamente</string>
-    <string name="file_upload_error">Error al subir archivo</string>
-    <string name="file_size_limit">El archivo no debe superar 10MB</string>
-    <string name="file_format_not_supported">Formato de archivo no soportado</string>
-    <string name="file_processing">Procesando archivo…</string>
-    <string name="file_choose_from_device">Elegir desde dispositivo</string>
-    <string name="file_camera">Tomar foto</string>
-    <string name="file_gallery">Elegir de galería</string>
-
-    <!-- Connectivity -->
-    <string name="no_internet">Sin conexión a internet</string>
-    <string name="check_connection">Verifica tu conexión</string>
-    <string name="server_error">Error del servidor</string>
-    <string name="timeout_error">Tiempo de espera agotado</string>
-    <string name="reconnecting">Reconectando…</string>
-    <string name="connection_restored">Conexión restaurada</string>
-    <string name="sync_pending">Sincronización pendiente</string>
-
-    <!-- Statistics -->
-    <string name="stats_total_study_time">Tiempo total de estudio</string>
-    <string name="stats_ai_interactions">Interacciones con IA</string>
-    <string name="stats_quizzes_completed">Quiz completados</string>
-    <string name="stats_summaries_generated">Resúmenes generados</string>
-    <string name="stats_favorite_subject">Materia favorita</string>
-    <string name="stats_best_performance">Mejor rendimiento</string>
-    <string name="stats_improvement_areas">Áreas de mejora</string>
-    <string name="stats_weekly_progress">Progreso semanal</string>
-    <string name="stats_monthly_summary">Resumen mensual</string>
-    <string name="stats_accuracy_rate">Tasa de aciertos</string>
-    <string name="stats_study_streak_days">Días de racha</string>
-    <string name="stats_goals_achieved">Metas alcanzadas</string>
-
-    <!-- Motivational Messages -->
-    <string name="motivation_excellent">¡Excelente trabajo! 🌟</string>
-    <string name="motivation_very_good">¡Muy bien! 👏</string>
-    <string name="motivation_good">¡Buen trabajo! 👍</string>
-    <string name="motivation_keep_going">¡Sigue así! 📚</string>
-    <string name="motivation_dont_give_up">¡No te rindas! 💪</string>
-    <string name="motivation_practice_makes_perfect">La práctica hace al maestro</string>
-    <string name="motivation_you_can_do_it">¡Tú puedes hacerlo!</string>
-    <string name="motivation_great_progress">¡Gran progreso!</string>
-    <string name="motivation_keep_learning">Sigue aprendiendo</string>
-    <string name="motivation_almost_there">¡Ya casi lo logras!</string>
-
-    <!-- Tips and Hints -->
-    <string name="tip_study_breaks">Toma descansos cada 45 minutos</string>
-    <string name="tip_active_recall">Usa técnicas de recuerdo activo</string>
-    <string name="tip_spaced_repetition">Practica la repetición espaciada</string>
-    <string name="tip_explain_others">Explica conceptos a otros</string>
-    <string name="tip_visual_aids">Usa ayudas visuales y diagramas</string>
-    <string name="tip_questions">Haz preguntas sobre el material</string>
-    <string name="tip_connections">Conecta conceptos nuevos con conocidos</string>
-    <string name="tip_environment">Estudia en un ambiente tranquilo</string>
-    <string name="tip_goals">Establece metas específicas</string>
-    <string name="tip_review">Repasa regularmente</string>
-
-    <!-- Accessibility -->
-    <string name="accessibility_back_button">Botón de retroceso</string>
-    <string name="accessibility_menu_button">Botón de menú</string>
-    <string name="accessibility_search_button">Botón de búsqueda</string>
-    <string name="accessibility_send_message">Enviar mensaje</string>
-    <string name="accessibility_attach_file">Adjuntar archivo</string>
-    <string name="accessibility_select_model">Seleccionar modelo de IA</string>
-    <string name="accessibility_quiz_option">Opción de quiz</string>
-    <string name="accessibility_study_session">Sesión de estudio</string>
-    <string name="accessibility_navigation">Navegación</string>
-    <string name="accessibility_settings">Configuración</string>
-
-    <!-- Onboarding -->
-    <string name="onboarding_welcome_title">Bienvenido a MindSpark AI</string>
-    <string name="onboarding_welcome_desc">Tu asistente inteligente para el aprendizaje</string>
-    <string name="onboarding_features_title">Funciones Principales</string>
-    <string name="onboarding_features_desc">Chat con IA, resúmenes, quiz y planes de estudio</string>
-    <string name="onboarding_personalized_title">Experiencia Personalizada</string>
-    <string name="onboarding_personalized_desc">Adaptado a tu ritmo y estilo de aprendizaje</string>
-    <string name="onboarding_get_started">Comenzar</string>
-    <string name="onboarding_skip">Omitir</string>
-    <string name="onboarding_next">Siguiente</string>
-    <string name="onboarding_finish">Finalizar</string>
-
-    <!-- Empty States -->
-    <string name="empty_chat">Inicia una conversación con IA</string>
-    <string name="empty_summaries">No tienes resúmenes guardados</string>
-    <string name="empty_quiz_history">No has completado ningún quiz</string>
-    <string name="empty_study_plans">Crea tu primer plan de estudio</string>
-    <string name="empty_recent_activity">No hay actividad reciente</string>
-    <string name="empty_search_results">No se encontraron resultados</string>
-    <string name="empty_favorites">No tienes favoritos</string>
-    <string name="empty_notifications">No hay notificaciones</string>
-
-    <!-- Offline Mode -->
-    <string name="offline_mode">Modo sin conexión</string>
-    <string name="offline_limited_features">Funciones limitadas sin internet</string>
-    <string name="offline_data_available">Datos disponibles sin conexión</string>
-    <string name="offline_sync_when_online">Se sincronizará al conectarse</string>
-    <string name="offline_cache_available">Caché disponible</string>
-
-    <!-- Premium Features (futuro) -->
-    <string name="premium_feature">Función Premium</string>
-    <string name="premium_upgrade">Actualizar a Premium</string>
-    <string name="premium_benefits">Beneficios Premium</string>
-    <string name="premium_unlimited">Uso ilimitado</string>
-    <string name="premium_priority_support">Soporte prioritario</string>
-    <string name="premium_advanced_analytics">Análisis avanzados</string>
-    <string name="premium_exclusive_models">Modelos exclusivos</string>
-    <string name="premium_no_ads">Sin anuncios</string>
-
-    <!-- API Configuration -->
-    <string name="api_keys_not_configured">API keys no configuradas</string>
-    <string name="api_keys_configure">Configurar API keys</string>
-    <string name="api_openai_description">Para usar GPT-4 y GPT-3.5</string>
-    <string name="api_claude_description">Para usar Claude-3</string>
-    <string name="api_gemini_description">Para usar Gemini Pro</string>
-    <string name="api_key_valid">API key válida</string>
-    <string name="api_key_invalid">API key inválida</string>
-    <string name="api_quota_exceeded">Cuota de API excedida</string>
-
-    <!-- Content Rating -->
-    <string name="rate_response">Calificar respuesta</string>
-    <string name="response_helpful">¿Te fue útil esta respuesta?</string>
-    <string name="thumbs_up">👍 Útil</string>
-    <string name="thumbs_down">👎 No útil</string>
-    <string name="feedback_sent">Feedback enviado</string>
-    <string name="improve_response">Ayúdanos a mejorar</string>
-    <string name="feedback_optional">Comentario opcional</string>
-
-    <!-- Data Management -->
-    <string name="data_management">Gestión de datos</string>
-    <string name="data_usage">Uso de datos</string>
-    <string name="data_clear_cache">Limpiar caché</string>
-    <string name="data_export_all">Exportar todos los datos</string>
-    <string name="data_import">Importar datos</string>
-    <string name="data_backup">Respaldar datos</string>
-    <string name="data_restore">Restaurar datos</string>
-    <string name="data_size_mb">%.1f MB</string>
-    <string name="data_cleared">Datos eliminados</string>
-    <string name="data_backup_created">Respaldo creado</string>
-
-    <!-- Study Reminders -->
-    <string name="reminder_set">Recordatorio configurado</string>
-    <string name="reminder_daily">Recordatorio diario</string>
-    <string name="reminder_time">Hora del recordatorio</string>
-    <string name="reminder_subjects">Materias a recordar</string>
-    <string name="reminder_custom_message">Mensaje personalizado</string>
-    <string name="reminder_enabled">Recordatorios activados</string>
-    <string name="reminder_disabled">Recordatorios desactivados</string>
-
-    <!-- Language and Region -->
-    <string name="language_spanish">Español</string>
-    <string name="language_english">English</string>
-    <string name="region_settings">Configuración regional</string>
-    <string name="date_format">Formato de fecha</string>
-    <string name="time_format">Formato de hora</string>
-    <string name="number_format">Formato de números</string>
-
-    <!-- Help and Support -->
-    <string name="help_support">Ayuda y soporte</string>
-    <string name="help_faq">Preguntas frecuentes</string>
-    <string name="help_contact">Contactar soporte</string>
-    <string name="help_tutorials">Tutoriales</string>
-    <string name="help_documentation">Documentación</string>
-    <string name="help_report_bug">Reportar error</string>
-    <string name="help_feature_request">Solicitar función</string>
-    <string name="help_community">Comunidad</string>
-    <string name="help_email_support">Enviar email de soporte</string>
-
-    <!-- About -->
-    <string name="about_app">Acerca de la app</string>
-    <string name="about_version">Versión %s</string>
-    <string name="about_build">Build %s</string>
-    <string name="about_developer">Desarrollado por Universidad</string>
-    <string name="about_privacy_policy">Política de privacidad</string>
-    <string name="about_terms_service">Términos de servicio</string>
-    <string name="about_open_source">Licencias de código abierto</string>
-    <string name="about_contact">Contacto</string>
-    <string name="about_website">Sitio web</string>
-    <string name="about_social_media">Redes sociales</string>
-
     <!-- Validation Messages -->
     <string name="validation_email_required">Email es requerido</string>
     <string name="validation_email_invalid">Formato de email inválido</string>
@@ -477,16 +275,7 @@
     <string name="validation_no_subjects_selected">Selecciona al menos una materia</string>
     <string name="validation_hours_invalid">Horas deben estar entre 1 y 12</string>
 
-    <!-- AI Response Types -->
-    <string name="ai_thinking">Pensando…</string>
-    <string name="ai_analyzing">Analizando…</string>
-    <string name="ai_generating">Generando…</string>
-    <string name="ai_processing">Procesando…</string>
-    <string name="ai_response_ready">Respuesta lista</string>
-    <string name="ai_response_error">Error en respuesta</string>
-    <string name="ai_model_switched">Modelo cambiado a %s</string>
-
-    <!-- Quiz Performance -->
+    <!-- Performance -->
     <string name="performance_excellent">Excelente (90-100%)</string>
     <string name="performance_very_good">Muy bueno (80-89%)</string>
     <string name="performance_good">Bueno (70-79%)</string>
@@ -501,14 +290,17 @@
     <string name="session_type_homework">📋 Tarea</string>
     <string name="session_type_research">🔍 Investigación</string>
 
-    <!-- Time Durations -->
-    <string name="duration_15_min">15 minutos</string>
-    <string name="duration_30_min">30 minutos</string>
-    <string name="duration_45_min">45 minutos</string>
-    <string name="duration_1_hour">1 hora</string>
-    <string name="duration_1_5_hours">1.5 horas</string>
-    <string name="duration_2_hours">2 horas</string>
-    <string name="duration_custom">Personalizado</string>
+    <!-- Motivational Messages -->
+    <string name="motivation_excellent">¡Excelente trabajo! 🌟</string>
+    <string name="motivation_very_good">¡Muy bien! 👏</string>
+    <string name="motivation_good">¡Buen trabajo! 👍</string>
+    <string name="motivation_keep_going">¡Sigue así! 📚</string>
+    <string name="motivation_dont_give_up">¡No te rindas! 💪</string>
+    <string name="motivation_practice_makes_perfect">La práctica hace al maestro</string>
+    <string name="motivation_you_can_do_it">¡Tú puedes hacerlo!</string>
+    <string name="motivation_great_progress">¡Gran progreso!</string>
+    <string name="motivation_keep_learning">Sigue aprendiendo</string>
+    <string name="motivation_almost_there">¡Ya casi lo logras!</string>
 
     <!-- Days of Week -->
     <string name="monday">Lunes</string>
@@ -519,106 +311,23 @@
     <string name="saturday">Sábado</string>
     <string name="sunday">Domingo</string>
 
-    <!-- Months -->
-    <string name="january">Enero</string>
-    <string name="february">Febrero</string>
-    <string name="march">Marzo</string>
-    <string name="april">Abril</string>
-    <string name="may">Mayo</string>
-    <string name="june">Junio</string>
-    <string name="july">Julio</string>
-    <string name="august">Agosto</string>
-    <string name="september">Septiembre</string>
-    <string name="october">Octubre</string>
-    <string name="november">Noviembre</string>
-    <string name="december">Diciembre</string>
+    <!-- Time Durations -->
+    <string name="duration_15_min">15 minutos</string>
+    <string name="duration_30_min">30 minutos</string>
+    <string name="duration_45_min">45 minutos</string>
+    <string name="duration_1_hour">1 hora</string>
+    <string name="duration_1_5_hours">1.5 horas</string>
+    <string name="duration_2_hours">2 horas</string>
+    <string name="duration_custom">Personalizado</string>
 
-    <!-- Study Tips Categories -->
-    <string name="tips_memory">Técnicas de memoria</string>
-    <string name="tips_concentration">Concentración</string>
-    <string name="tips_time_management">Gestión del tiempo</string>
-    <string name="tips_note_taking">Toma de notas</string>
-    <string name="tips_exam_prep">Preparación de exámenes</string>
-    <string name="tips_motivation">Motivación</string>
-
-    <!-- Sharing -->
-    <string name="share_summary">Compartir resumen</string>
-    <string name="share_quiz_results">Compartir resultados</string>
-    <string name="share_study_plan">Compartir plan de estudio</string>
-    <string name="share_conversation">Compartir conversación</string>
-    <string name="share_via">Compartir mediante</string>
-    <string name="shared_from_mindspark">Compartido desde MindSpark AI</string>
-
-    <!-- Search and Filter -->
-    <string name="search_hint">Buscar…</string>
-    <string name="search_results">Resultados de búsqueda</string>
-    <string name="filter_by_subject">Filtrar por materia</string>
-    <string name="filter_by_date">Filtrar por fecha</string>
-    <string name="filter_by_type">Filtrar por tipo</string>
-    <string name="filter_by_difficulty">Filtrar por dificultad</string>
-    <string name="clear_filters">Limpiar filtros</string>
-    <string name="no_results_found">No se encontraron resultados</string>
-
-    <!-- Favorites -->
-    <string name="add_to_favorites">Agregar a favoritos</string>
-    <string name="remove_from_favorites">Quitar de favoritos</string>
-    <string name="favorites">Favoritos</string>
-    <string name="favorite_subjects">Materias favoritas</string>
-    <string name="favorite_models">Modelos favoritos</string>
-    <string name="added_to_favorites">Agregado a favoritos</string>
-    <string name="removed_from_favorites">Quitado de favoritos</string>
-
-    <!-- Widgets and Shortcuts -->
-    <string name="widget_quick_chat">Chat rápido</string>
-    <string name="widget_daily_goal">Meta diaria</string>
-    <string name="widget_study_timer">Temporizador de estudio</string>
-    <string name="shortcut_new_chat">Nueva conversación</string>
-    <string name="shortcut_quick_quiz">Quiz rápido</string>
-    <string name="shortcut_study_plan">Ver plan</string>
-
-    <!-- Backup and Sync -->
-    <string name="backup_now">Respaldar ahora</string>
-    <string name="backup_automatic">Respaldo automático</string>
-    <string name="backup_wifi_only">Solo con WiFi</string>
-    <string name="sync_in_progress">Sincronizando…</string>
-    <string name="sync_completed">Sincronización completada</string>
-    <string name="sync_failed">Error de sincronización</string>
-    <string name="last_backup">Último respaldo: %s</string>
-    <string name="backup_size">Tamaño del respaldo: %s</string>
-
-    <!-- Permissions -->
-    <string name="permission_storage">Acceso al almacenamiento</string>
-    <string name="permission_camera">Acceso a la cámara</string>
-    <string name="permission_microphone">Acceso al micrófono</string>
-    <string name="permission_notifications">Mostrar notificaciones</string>
-    <string name="permission_required">Permiso requerido</string>
-    <string name="permission_denied">Permiso denegado</string>
-    <string name="permission_explanation">Este permiso es necesario para %s</string>
-
-    <!-- Updates -->
-    <string name="update_available">Actualización disponible</string>
-    <string name="update_required">Actualización requerida</string>
-    <string name="update_optional">Actualización opcional</string>
-    <string name="update_now">Actualizar ahora</string>
-    <string name="update_later">Actualizar después</string>
-    <string name="update_downloading">Descargando actualización…</string>
-    <string name="update_installing">Instalando actualización…</string>
-    <string name="update_completed">Actualización completada</string>
-    <string name="whats_new">Novedades</string>
+    <!-- App Info -->
+    <string name="about_app">Acerca de la app</string>
+    <string name="about_version">Versión %s</string>
+    <string name="about_developer">Desarrollado por Universidad</string>
+    <string name="about_privacy_policy">Política de privacidad</string>
+    <string name="about_terms_service">Términos de servicio</string>
 
     <!-- Default web client ID for Google Sign In -->
     <string name="default_web_client_id" translatable="false">744063847491-cffff27bf3nut5ufoiighmchuusgt228.apps.googleusercontent.com</string>
-
-    <!-- Server Configuration (no traducir) -->
-    <string name="server_url_production" translatable="false">https://api.mindsparkai.com</string>
-    <string name="server_url_staging" translatable="false">https://staging-api.mindsparkai.com</string>
-    <string name="server_url_development" translatable="false">https://dev-api.mindsparkai.com</string>
-
-    <!-- API Endpoints (no traducir) -->
-    <string name="endpoint_auth" translatable="false">/auth</string>
-    <string name="endpoint_chat" translatable="false">/chat</string>
-    <string name="endpoint_summary" translatable="false">/summary</string>
-    <string name="endpoint_quiz" translatable="false">/quiz</string>
-    <string name="endpoint_study_plan" translatable="false">/study-plan</string>
 
 </resources>

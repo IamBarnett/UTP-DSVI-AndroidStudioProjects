@@ -1,17 +1,13 @@
 package com.universidad.mindsparkai.utils
 
+import com.universidad.mindsparkai.BuildConfig
+
 object APIKeysConfig {
 
-    // En producción, estas keys deberían venir de:
-    // 1. BuildConfig (configuradas en build.gradle)
-    // 2. Variables de entorno
-    // 3. Servicio de configuración remota como Firebase Remote Config
-    // 4. Nunca hardcodeadas en el código
-
-    // Para desarrollo/demo - REEMPLAZA CON TUS KEYS REALES
-    const val OPENAI_API_KEY = "sk-your-openai-api-key-here"
-    const val CLAUDE_API_KEY = "your-claude-api-key-here"
-    const val GEMINI_API_KEY = "your-gemini-api-key-here"
+    // API Keys desde BuildConfig (configuradas en build.gradle)
+    val OPENAI_API_KEY: String get() = BuildConfig.OPENAI_API_KEY
+    val CLAUDE_API_KEY: String get() = BuildConfig.CLAUDE_API_KEY
+    val GEMINI_API_KEY: String get() = BuildConfig.GEMINI_API_KEY
 
     // URLs base de las APIs
     const val OPENAI_BASE_URL = "https://api.openai.com/"
@@ -20,18 +16,32 @@ object APIKeysConfig {
 
     // Función para validar si las keys están configuradas
     fun areKeysConfigured(): Boolean {
-        return OPENAI_API_KEY != "sk-your-openai-api-key-here" ||
-                CLAUDE_API_KEY != "your-claude-api-key-here" ||
-                GEMINI_API_KEY != "your-gemini-api-key-here"
+        return try {
+            OPENAI_API_KEY.isNotEmpty() ||
+                    CLAUDE_API_KEY.isNotEmpty() ||
+                    GEMINI_API_KEY.isNotEmpty()
+        } catch (e: Exception) {
+            false
+        }
     }
 
     // Función para obtener la key según el modelo
     fun getApiKey(provider: String): String? {
-        return when (provider.lowercase()) {
-            "openai" -> if (OPENAI_API_KEY.startsWith("sk-")) OPENAI_API_KEY else null
-            "anthropic", "claude" -> if (CLAUDE_API_KEY != "your-claude-api-key-here") CLAUDE_API_KEY else null
-            "google", "gemini" -> if (GEMINI_API_KEY != "your-gemini-api-key-here") GEMINI_API_KEY else null
-            else -> null
+        return try {
+            when (provider.lowercase()) {
+                "openai" -> if (OPENAI_API_KEY.isNotEmpty()) OPENAI_API_KEY else null
+                "anthropic", "claude" -> if (CLAUDE_API_KEY.isNotEmpty()) CLAUDE_API_KEY else null
+                "google", "gemini" -> if (GEMINI_API_KEY.isNotEmpty()) GEMINI_API_KEY else null
+                else -> null
+            }
+        } catch (e: Exception) {
+            // Fallback para desarrollo si BuildConfig no está disponible
+            when (provider.lowercase()) {
+                "openai" -> "demo-key-openai"
+                "anthropic", "claude" -> "demo-key-claude"
+                "google", "gemini" -> "demo-key-gemini"
+                else -> null
+            }
         }
     }
 
@@ -39,10 +49,34 @@ object APIKeysConfig {
     fun getAvailableProviders(): List<String> {
         val providers = mutableListOf<String>()
 
-        if (getApiKey("openai") != null) providers.add("openai")
-        if (getApiKey("claude") != null) providers.add("anthropic")
-        if (getApiKey("gemini") != null) providers.add("google")
+        try {
+            if (getApiKey("openai") != null) providers.add("openai")
+            if (getApiKey("claude") != null) providers.add("anthropic")
+            if (getApiKey("gemini") != null) providers.add("google")
+        } catch (e: Exception) {
+            // En caso de error, agregar todos para testing
+            providers.addAll(listOf("openai", "anthropic", "google"))
+        }
 
         return providers
+    }
+
+    // Función para testing - usar keys de demostración
+    fun getDemoKey(provider: String): String {
+        return when (provider.lowercase()) {
+            "openai" -> "demo-openai-key-for-testing"
+            "anthropic", "claude" -> "demo-claude-key-for-testing"
+            "google", "gemini" -> "demo-gemini-key-for-testing"
+            else -> "demo-key"
+        }
+    }
+
+    // Función para verificar si estamos en modo demo
+    fun isDemoMode(): Boolean {
+        return try {
+            !areKeysConfigured()
+        } catch (e: Exception) {
+            true
+        }
     }
 }

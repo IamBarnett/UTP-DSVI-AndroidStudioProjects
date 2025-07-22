@@ -5,23 +5,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.universidad.mindsparkai.R
 import com.universidad.mindsparkai.databinding.FragmentDashboardBinding
 import com.universidad.mindsparkai.ui.adapters.RecentActivityAdapter
 import com.universidad.mindsparkai.ui.viewmodels.DashboardViewModel
-// import dagger.hilt.android.AndroidEntryPoint  // ← COMENTADO
+import dagger.hilt.android.AndroidEntryPoint
 
-// @AndroidEntryPoint  // ← COMENTADO TEMPORALMENTE
+@AndroidEntryPoint
 class DashboardFragment : Fragment() {
 
     private var _binding: FragmentDashboardBinding? = null
     private val binding get() = _binding!!
 
-    // Crear ViewModel manualmente sin Hilt
-    private lateinit var viewModel: DashboardViewModel
+    private val viewModel: DashboardViewModel by viewModels()
     private lateinit var recentActivityAdapter: RecentActivityAdapter
 
     override fun onCreateView(
@@ -35,10 +34,6 @@ class DashboardFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        // Crear ViewModel sin Hilt
-        viewModel = ViewModelProvider(this)[DashboardViewModel::class.java]
-
         setupRecyclerView()
         setupListeners()
         observeViewModel()
@@ -92,12 +87,12 @@ class DashboardFragment : Fragment() {
         }
 
         viewModel.loading.observe(viewLifecycleOwner) { isLoading ->
-            // Show/hide loading indicator
+            // Show/hide loading indicator if needed
         }
 
         viewModel.error.observe(viewLifecycleOwner) { error ->
             error?.let {
-                // Show error message
+                // Show error message if needed
             }
         }
     }
@@ -107,4 +102,3 @@ class DashboardFragment : Fragment() {
         _binding = null
     }
 }
-

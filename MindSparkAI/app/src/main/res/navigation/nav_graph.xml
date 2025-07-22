@@ -68,26 +68,106 @@
     <fragment
         android:id="@+id/chatFragment"
         android:name="com.universidad.mindsparkai.ui.fragments.ChatFragment"
-        android:label="Chat" />
+        android:label="Chat">
+        <action
+            android:id="@+id/action_chat_to_dashboard"
+            app:destination="@id/dashboardFragment" />
+        <action
+            android:id="@+id/action_chat_to_summary"
+            app:destination="@id/summaryFragment" />
+        <action
+            android:id="@+id/action_chat_to_quiz"
+            app:destination="@id/quizFragment" />
+        <action
+            android:id="@+id/action_chat_to_study_plan"
+            app:destination="@id/studyPlanFragment" />
+        <action
+            android:id="@+id/action_chat_to_profile"
+            app:destination="@id/profileFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/summaryFragment"
         android:name="com.universidad.mindsparkai.ui.fragments.SummaryFragment"
-        android:label="Summary" />
+        android:label="Summary">
+        <action
+            android:id="@+id/action_summary_to_dashboard"
+            app:destination="@id/dashboardFragment" />
+        <action
+            android:id="@+id/action_summary_to_chat"
+            app:destination="@id/chatFragment" />
+        <action
+            android:id="@+id/action_summary_to_quiz"
+            app:destination="@id/quizFragment" />
+        <action
+            android:id="@+id/action_summary_to_study_plan"
+            app:destination="@id/studyPlanFragment" />
+        <action
+            android:id="@+id/action_summary_to_profile"
+            app:destination="@id/profileFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/quizFragment"
         android:name="com.universidad.mindsparkai.ui.fragments.QuizFragment"
-        android:label="Quiz" />
+        android:label="Quiz">
+        <action
+            android:id="@+id/action_quiz_to_dashboard"
+            app:destination="@id/dashboardFragment" />
+        <action
+            android:id="@+id/action_quiz_to_chat"
+            app:destination="@id/chatFragment" />
+        <action
+            android:id="@+id/action_quiz_to_summary"
+            app:destination="@id/summaryFragment" />
+        <action
+            android:id="@+id/action_quiz_to_study_plan"
+            app:destination="@id/studyPlanFragment" />
+        <action
+            android:id="@+id/action_quiz_to_profile"
+            app:destination="@id/profileFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/studyPlanFragment"
         android:name="com.universidad.mindsparkai.ui.fragments.StudyPlanFragment"
-        android:label="Study Plan" />
+        android:label="Study Plan">
+        <action
+            android:id="@+id/action_study_plan_to_dashboard"
+            app:destination="@id/dashboardFragment" />
+        <action
+            android:id="@+id/action_study_plan_to_chat"
+            app:destination="@id/chatFragment" />
+        <action
+            android:id="@+id/action_study_plan_to_summary"
+            app:destination="@id/summaryFragment" />
+        <action
+            android:id="@+id/action_study_plan_to_quiz"
+            app:destination="@id/quizFragment" />
+        <action
+            android:id="@+id/action_study_plan_to_profile"
+            app:destination="@id/profileFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.universidad.mindsparkai.ui.fragments.ProfileFragment"
-        android:label="Profile" />
+        android:label="Profile">
+        <action
+            android:id="@+id/action_profile_to_dashboard"
+            app:destination="@id/dashboardFragment" />
+        <action
+            android:id="@+id/action_profile_to_chat"
+            app:destination="@id/chatFragment" />
+        <action
+            android:id="@+id/action_profile_to_summary"
+            app:destination="@id/summaryFragment" />
+        <action
+            android:id="@+id/action_profile_to_quiz"
+            app:destination="@id/quizFragment" />
+        <action
+            android:id="@+id/action_profile_to_study_plan"
+            app:destination="@id/studyPlanFragment" />
+    </fragment>
 
 </navigation>

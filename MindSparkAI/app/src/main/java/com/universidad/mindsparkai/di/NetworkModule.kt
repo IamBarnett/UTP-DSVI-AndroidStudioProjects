@@ -71,6 +71,7 @@ object NetworkModule {
             .build()
     }
 
+    // Usar OpenAI por defecto (tu key funciona)
     @Provides
     @Singleton
     fun provideAIService(@Named("openai") retrofit: Retrofit): AIService {
