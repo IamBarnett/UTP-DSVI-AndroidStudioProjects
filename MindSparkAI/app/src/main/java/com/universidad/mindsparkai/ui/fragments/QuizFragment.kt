@@ -165,7 +165,7 @@ class QuizFragment : Fragment() {
             finishQuiz()
         }
     }
-
+//
     private fun observeViewModel() {
         viewModel.questions.observe(viewLifecycleOwner) { questions ->
             currentQuestions = questions
