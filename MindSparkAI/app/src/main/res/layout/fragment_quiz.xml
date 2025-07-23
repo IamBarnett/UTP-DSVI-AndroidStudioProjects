@@ -86,43 +86,18 @@
                 android:scrollbars="none">
 
                 <LinearLayout
+                    android:id="@+id/chip_group_models"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:background="@drawable/bg_chip_selected"
-                        android:padding="8dp"
-                        android:text="GPT-4"
-                        android:textColor="@color/primary_blue"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:background="@drawable/bg_chip"
-                        android:padding="8dp"
-                        android:text="Claude-3"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bg_chip"
-                        android:padding="8dp"
-                        android:text="Specialized"
-                        android:textSize="14sp" />
-
+                    <!-- Los chips se agregan dinámicamente -->
                 </LinearLayout>
 
             </HorizontalScrollView>
 
-            <!-- Current Question -->
+            <!-- Current Question Card -->
             <androidx.cardview.widget.CardView
+                android:id="@+id/card_current_question"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -137,15 +112,17 @@
                     android:padding="20dp">
 
                     <TextView
+                        android:id="@+id/tv_question_counter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
-                        android:text="Pregunta 1 de 5"
-                        android:textColor="@color/text_primary"
-                        android:textSize="16sp"
+                        android:text="Selecciona una materia para comenzar"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="14sp"
                         android:fontFamily="sans-serif-medium" />
 
                     <TextView
+                        android:id="@+id/tv_question"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
@@ -195,12 +172,86 @@
                         android:id="@+id/option_d"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
                         android:background="@drawable/bg_quiz_option"
                         android:padding="12dp"
                         android:text="D) Digestión celular"
                         android:textSize="14sp"
                         android:clickable="true"
                         android:focusable="true" />
+
+                    <!-- Navigation Buttons -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+
+                        <Button
+                            android:id="@+id/btn_previous"
+                            style="@style/ButtonSecondaryStyle"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="8dp"
+                            android:text="Anterior"
+                            android:enabled="false" />
+
+                        <Button
+                            android:id="@+id/btn_next"
+                            style="@style/ButtonPrimaryStyle"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_marginStart="8dp"
+                            android:text="Confirmar" />
+
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/btn_submit_quiz"
+                        style="@style/ButtonPrimaryStyle"
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="8dp"
+                        android:text="Finalizar Quiz"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- Explanation Card -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_explanation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:visibility="gone"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                app:cardBackgroundColor="@color/background_light">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="💡 Explicación"
+                        android:textColor="@color/text_primary"
+                        android:textSize="16sp"
+                        android:fontFamily="sans-serif-medium" />
+
+                    <TextView
+                        android:id="@+id/tv_explanation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Las mitocondrias son conocidas como las 'centrales energéticas' de la célula porque producen ATP."
+                        android:textColor="@color/text_primary"
+                        android:textSize="14sp"
+                        android:lineSpacingExtra="4dp" />
 
                 </LinearLayout>
 
@@ -225,7 +276,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
-                        android:text="Generación automática"
+                        android:text="Generación de preguntas"
                         android:textColor="@color/text_primary"
                         android:textSize="16sp"
                         android:fontFamily="sans-serif-medium" />
@@ -234,16 +285,34 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
-                        android:text="Selecciona tema y dificultad para generar preguntas"
+                        android:text="Selecciona la materia y dificultad para generar preguntas"
                         android:textColor="@color/text_secondary"
                         android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="Materia"
+                        android:textColor="@color/text_primary"
+                        android:textSize="14sp"
+                        android:fontFamily="sans-serif-medium" />
 
                     <Spinner
                         android:id="@+id/spinner_subject"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
-                        android:layout_marginBottom="12dp"
+                        android:layout_marginBottom="16dp"
                         android:background="@drawable/bg_input" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="Dificultad"
+                        android:textColor="@color/text_primary"
+                        android:textSize="14sp"
+                        android:fontFamily="sans-serif-medium" />
 
                     <Spinner
                         android:id="@+id/spinner_difficulty"
@@ -252,11 +321,164 @@
                         android:layout_marginBottom="16dp"
                         android:background="@drawable/bg_input" />
 
-                    <Button
-                        android:id="@+id/btn_generate"
-                        style="@style/ButtonPrimaryStyle"
+                    <!-- Generation Buttons -->
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:text="🤖 Generar nuevas preguntas" />
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+
+                        <Button
+                            android:id="@+id/btn_generate_random"
+                            style="@style/ButtonSecondaryStyle"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="8dp"
+                            android:text="🎲 Aleatorio"
+                            android:textSize="14sp" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp">
+
+                            <Button
+                                android:id="@+id/btn_generate"
+                                style="@style/ButtonPrimaryStyle"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="🤖 Generar con IA"
+                                android:textSize="14sp"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent" />
+
+                            <ProgressBar
+                                android:id="@+id/progress_bar"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_marginEnd="16dp"
+                                android:visibility="gone"
+                                android:indeterminateTint="@color/white"
+                                app:layout_constraintTop_toTopOf="@+id/btn_generate"
+                                app:layout_constraintBottom_toBottomOf="@+id/btn_generate"
+                                app:layout_constraintEnd_toEndOf="@+id/btn_generate" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- Quick Stats -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                app:cardBackgroundColor="@color/surface_white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="📊 Estadísticas"
+                        android:textColor="@color/text_primary"
+                        android:textSize="16sp"
+                        android:fontFamily="sans-serif-medium" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/tv_quizzes_completed"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0"
+                                android:textColor="@color/primary_blue"
+                                android:textSize="18sp"
+                                android:fontFamily="sans-serif-bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Completados"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/tv_average_score"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0%"
+                                android:textColor="@color/primary_blue"
+                                android:textSize="18sp"
+                                android:fontFamily="sans-serif-bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Promedio"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/tv_best_subject"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="N/A"
+                                android:textColor="@color/primary_blue"
+                                android:textSize="14sp"
+                                android:fontFamily="sans-serif-bold"
+                                android:maxLines="1"
+                                android:ellipsize="end" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Mejor materia"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 

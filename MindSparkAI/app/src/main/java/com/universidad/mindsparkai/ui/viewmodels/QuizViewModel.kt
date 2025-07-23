@@ -8,13 +8,15 @@ import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import com.universidad.mindsparkai.data.models.QuizQuestion
 import com.universidad.mindsparkai.data.repository.AIRepository
+import com.universidad.mindsparkai.data.repository.LocalDataRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class QuizViewModel @Inject constructor(
-    private val aiRepository: AIRepository
+    private val aiRepository: AIRepository,
+    private val localDataRepository: LocalDataRepository
 ) : ViewModel() {
 
     private val _questions = MutableLiveData<List<QuizQuestion>>()
@@ -56,14 +58,18 @@ class QuizViewModel @Inject constructor(
     private val _showExplanation = MutableLiveData<Boolean>()
     val showExplanation: LiveData<Boolean> = _showExplanation
 
+    private val _quizStats = MutableLiveData<Map<String, Any>>()
+    val quizStats: LiveData<Map<String, Any>> = _quizStats
+
     private val _userAnswers = mutableListOf<Int?>()
     private val _questionStartTime = MutableLiveData<Long>()
 
-    // Materias disponibles
+    // Materias disponibles expandidas
     val availableSubjects = listOf(
         "Matemáticas", "Química", "Física", "Biología", "Historia",
         "Literatura", "Inglés", "Filosofía", "Economía", "Programación",
-        "Psicología", "Sociología", "Geografia", "Arte", "Música"
+        "Psicología", "Sociología", "Geografia", "Arte", "Música",
+        "Derecho", "Medicina", "Ingeniería", "Arquitectura", "Administración"
     )
 
     // Niveles de dificultad
@@ -86,6 +92,7 @@ class QuizViewModel @Inject constructor(
         _isQuizCompleted.value = false
         _showExplanation.value = false
 
+        loadQuizStats()
         loadSampleQuestion()
     }
 
@@ -110,6 +117,26 @@ class QuizViewModel @Inject constructor(
         _totalQuestions.value = 1
     }
 
+    private fun loadQuizStats() {
+        val results = localDataRepository.getQuizResults()
+        val completedQuizzes = results.size
+        val averageScore = if (results.isNotEmpty()) {
+            results.map { (it["percentage"] as? Double)?.toInt() ?: 0 }.average().toInt()
+        } else 0
+
+        val subjectScores = results.groupBy { it["subject"] as? String ?: "Unknown" }
+            .mapValues { (_, scores) ->
+                scores.map { (it["percentage"] as? Double)?.toInt() ?: 0 }.average().toInt()
+            }
+        val bestSubject = subjectScores.maxByOrNull { it.value }?.key ?: "N/A"
+
+        _quizStats.value = mapOf(
+            "completedQuizzes" to completedQuizzes,
+            "averageScore" to averageScore,
+            "bestSubject" to bestSubject
+        )
+    }
+
     fun generateQuestions(subject: String, difficulty: String, count: Int = 5) {
         viewModelScope.launch {
             try {
@@ -117,6 +144,10 @@ class QuizViewModel @Inject constructor(
                 _error.value = null
                 _selectedSubject.value = subject
                 _selectedDifficulty.value = difficulty
+
+                // Incrementar uso de IA
+                localDataRepository.incrementFeatureUsage("quiz")
+                localDataRepository.incrementAIUsage(_selectedModel.value?.provider ?: "openai")
 
                 val result = aiRepository.generateQuizQuestions(
                     subject = subject,
@@ -143,15 +174,7 @@ class QuizViewModel @Inject constructor(
                             }
 
                             if (questions.isNotEmpty()) {
-                                _questions.value = questions
-                                _totalQuestions.value = questions.size
-                                _currentQuestionIndex.value = 0
-                                _currentQuestion.value = questions.first()
-                                _score.value = 0
-                                _isQuizCompleted.value = false
-                                _userAnswers.clear()
-                                repeat(questions.size) { _userAnswers.add(null) }
-                                startQuestionTimer()
+                                setQuestions(questions)
                             } else {
                                 _error.value = "No se pudieron generar preguntas válidas"
                             }
@@ -169,6 +192,19 @@ class QuizViewModel @Inject constructor(
                 _loading.value = false
             }
         }
+    }
+
+    private fun setQuestions(questions: List<QuizQuestion>) {
+        _questions.value = questions
+        _totalQuestions.value = questions.size
+        _currentQuestionIndex.value = 0
+        _currentQuestion.value = questions.firstOrNull()
+        _score.value = 0
+        _isQuizCompleted.value = false
+        _showExplanation.value = false
+        _userAnswers.clear()
+        repeat(questions.size) { _userAnswers.add(null) }
+        startQuestionTimer()
     }
 
     private data class QuizResponse(
@@ -194,6 +230,30 @@ class QuizViewModel @Inject constructor(
                         options = listOf("A) H2O", "B) CO2", "C) NaCl", "D) O2"),
                         correctAnswer = 0,
                         explanation = "H2O es la fórmula química del agua, compuesta por dos átomos de hidrógeno y uno de oxígeno."
+                    ),
+                    QuestionData(
+                        question = "¿Cuánto es 2 + 2?",
+                        options = listOf("A) 3", "B) 4", "C) 5", "D) 6"),
+                        correctAnswer = 1,
+                        explanation = "2 + 2 = 4, es una operación básica de suma."
+                    ),
+                    QuestionData(
+                        question = "¿Cuál es la capital de Francia?",
+                        options = listOf("A) Londres", "B) París", "C) Roma", "D) Madrid"),
+                        correctAnswer = 1,
+                        explanation = "París es la capital y ciudad más poblada de Francia."
+                    ),
+                    QuestionData(
+                        question = "¿Cuántos días tiene un año bisiesto?",
+                        options = listOf("A) 364", "B) 365", "C) 366", "D) 367"),
+                        correctAnswer = 2,
+                        explanation = "Un año bisiesto tiene 366 días, con un día extra en febrero."
+                    ),
+                    QuestionData(
+                        question = "¿Cuál es el planeta más cercano al Sol?",
+                        options = listOf("A) Venus", "B) Mercurio", "C) Tierra", "D) Marte"),
+                        correctAnswer = 1,
+                        explanation = "Mercurio es el planeta más cercano al Sol en nuestro sistema solar."
                     )
                 )
             )
@@ -269,6 +329,22 @@ class QuizViewModel @Inject constructor(
     private fun completeQuiz() {
         _isQuizCompleted.value = true
         _currentQuestion.value = null
+
+        // Guardar resultados
+        saveQuizResults()
+
+        // Actualizar estadísticas
+        loadQuizStats()
+    }
+
+    private fun saveQuizResults() {
+        val score = _score.value ?: 0
+        val total = _totalQuestions.value ?: 0
+        val subject = _selectedSubject.value ?: "General"
+        val difficulty = _selectedDifficulty.value ?: "Intermedio"
+        val model = _selectedModel.value?.displayName ?: "AI"
+
+        localDataRepository.saveQuizResult(subject, score, total, difficulty, model)
     }
 
     private fun startQuestionTimer() {
@@ -363,5 +439,80 @@ class QuizViewModel @Inject constructor(
                 )
             }
         )
+    }
+
+    // Función para obtener recomendaciones de estudio
+    fun getStudyRecommendations(): List<String> {
+        val results = getQuizResults()
+        val percentage = results["percentage"] as Int
+        val subject = results["subject"] as String
+
+        val recommendations = mutableListOf<String>()
+
+        when {
+            percentage >= 90 -> {
+                recommendations.add("🎉 ¡Excelente dominio de $subject!")
+                recommendations.add("📈 Considera aumentar la dificultad para mayor desafío")
+                recommendations.add("🎯 Podrías ayudar a otros estudiantes con esta materia")
+            }
+            percentage >= 70 -> {
+                recommendations.add("👍 Buen conocimiento de $subject")
+                recommendations.add("📚 Repasa los temas donde tuviste errores")
+                recommendations.add("💪 Con un poco más de práctica dominarás la materia")
+            }
+            percentage >= 50 -> {
+                recommendations.add("📖 Necesitas repasar más $subject")
+                recommendations.add("🎯 Enfócate en los conceptos fundamentales")
+                recommendations.add("⏰ Dedica más tiempo de estudio a esta materia")
+            }
+            else -> {
+                recommendations.add("🚀 ¡No te desanimes! Todos empezamos desde algún lugar")
+                recommendations.add("📚 Considera repasar los conceptos básicos de $subject")
+                recommendations.add("👨‍🏫 Busca ayuda adicional o tutorías para esta materia")
+                recommendations.add("🎯 Practica con quizzes más fáciles primero")
+            }
+        }
+
+        return recommendations
+    }
+
+    // Función para obtener el progreso por materia
+    fun getSubjectProgress(): Map<String, Int> {
+        val results = localDataRepository.getQuizResults()
+        return results.groupBy { it["subject"] as? String ?: "Unknown" }
+            .mapValues { (_, scores) ->
+                if (scores.isNotEmpty()) {
+                    scores.map { (it["percentage"] as? Double)?.toInt() ?: 0 }.average().toInt()
+                } else 0
+            }
+    }
+
+    // Función para generar estadísticas de rendimiento
+    fun getPerformanceAnalysis(): Map<String, Any> {
+        val results = localDataRepository.getQuizResults()
+        val recentResults = results.takeLast(10) // Últimos 10 quizzes
+
+        val analysis = mutableMapOf<String, Any>()
+
+        if (recentResults.isNotEmpty()) {
+            val scores = recentResults.map { (it["percentage"] as? Double)?.toInt() ?: 0 }
+            val averageScore = scores.average().toInt()
+            val trend = if (scores.size > 1) {
+                val firstHalf = scores.take(scores.size / 2).average()
+                val secondHalf = scores.drop(scores.size / 2).average()
+                when {
+                    secondHalf > firstHalf + 5 -> "Mejorando"
+                    secondHalf < firstHalf - 5 -> "Necesita atención"
+                    else -> "Estable"
+                }
+            } else "Insuficientes datos"
+
+            analysis["averageScore"] = averageScore
+            analysis["trend"] = trend
+            analysis["totalQuizzes"] = results.size
+            analysis["recentQuizzes"] = recentResults.size
+        }
+
+        return analysis
     }
 }
